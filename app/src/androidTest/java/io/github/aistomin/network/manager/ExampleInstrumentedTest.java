@@ -17,7 +17,7 @@ public class ExampleInstrumentedTest {
     @Test
     public void useAppContext() throws Exception {
         assertEquals(
-            "io.github.aistomin.networkmanager",
+            "io.github.aistomin.network.manager",
             InstrumentationRegistry.getTargetContext().getPackageName()
         );
     }
