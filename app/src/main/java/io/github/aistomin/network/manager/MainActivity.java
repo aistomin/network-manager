@@ -37,13 +37,20 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         list = getListView();
-        mainWifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        mainWifi = (WifiManager) getApplicationContext()
+            .getSystemService(Context.WIFI_SERVICE);
         if (!mainWifi.isWifiEnabled()) {
-            Toast.makeText(MainActivity.this, "WIFI is not enabled. Let's enable it.", Toast.LENGTH_LONG).show();
+            Toast.makeText(
+                MainActivity.this, "WIFI is not enabled. Let's enable it.",
+                Toast.LENGTH_LONG
+            ).show();
             mainWifi.setWifiEnabled(true);
         }
         wifiReciever = new WifiScanReceiver();
-        registerReceiver(wifiReciever, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        registerReceiver(
+            wifiReciever,
+            new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
+        );
         mainWifi.startScan();
         // listening to single list item on click
         list.setOnItemClickListener(
@@ -52,7 +59,10 @@ public class MainActivity extends ListActivity {
                     // selected item
                     String ssid = ((TextView) view).getText().toString();
                     connectToWifi(ssid);
-                    Toast.makeText(MainActivity.this, "Wifi SSID : " + ssid, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                        MainActivity.this, "Wifi SSID : " + ssid,
+                        Toast.LENGTH_SHORT
+                    ).show();
                 }
             }
         );
@@ -64,7 +74,10 @@ public class MainActivity extends ListActivity {
     }
 
     protected void onResume() {
-        registerReceiver(wifiReciever, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        registerReceiver(
+            wifiReciever,
+            new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
+        );
         super.onResume();
     }
 
@@ -74,7 +87,9 @@ public class MainActivity extends ListActivity {
             final List<ScanResult> results = mainWifi.getScanResults();
             final Set<String> filtered = new HashSet<>();
             for (final ScanResult result : results) {
-                filtered.add(result.toString().split(",")[0].substring(5).trim());
+                filtered.add(
+                    result.toString().split(",")[0].substring(5).trim()
+                );
             }
             list.setAdapter(
                 new ArrayAdapter<>(
